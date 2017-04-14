@@ -132,6 +132,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         gameStart = false;
         level = 1;
         points = 0;
+        score = 0;
 
         // update view
         pointsTextView.setText(String.valueOf(points));
@@ -197,11 +198,13 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         intent.putExtra("newScore", highScore == points);
         intent.putExtra("gameMode", gameMode.name());
         startActivity(intent);
+        finish();
     }
 
     // called on correct guess
     public void updatePoints() {
         points = points + POINT_INCREMENT;
+        score = score + SCORE_INCREMENT;
         TIMER_DELTA = -TIMER_BUMP * TIMER_DELTA; // give a timer bump
         pointsTextView.setText(String.valueOf(points));
         pointAnim.start();
