@@ -1,4 +1,4 @@
-package com.prakharme.prakharsriv.colorphun;
+package com.chanse.games.colorphun;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.prakharme.prakharsriv.colorphun.util.BetterColor;
+import com.chanse.games.colorphun.util.BetterColor;
 
 public class EasyGameActivity extends MainGameActivity {
 
@@ -15,7 +15,7 @@ public class EasyGameActivity extends MainGameActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_easy_game);
+        setContentView(com.prakharme.prakharsriv.colorphun.R.layout.activity_easy_game);
         setupProgressView();
 
         POINT_INCREMENT = 2;
@@ -23,8 +23,8 @@ public class EasyGameActivity extends MainGameActivity {
 
         gameMode = GameMode.EASY;
 
-        topBtn = (Button) findViewById(R.id.top_button);
-        bottomBtn = (Button) findViewById(R.id.bottom_button);
+        topBtn = (Button) findViewById(com.prakharme.prakharsriv.colorphun.R.id.top_button);
+        bottomBtn = (Button) findViewById(com.prakharme.prakharsriv.colorphun.R.id.bottom_button);
         topBtn.setOnClickListener(this);
         bottomBtn.setOnClickListener(this);
 

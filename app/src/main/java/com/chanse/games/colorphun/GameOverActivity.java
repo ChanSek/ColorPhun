@@ -1,4 +1,4 @@
-package com.prakharme.prakharsriv.colorphun;
+package com.chanse.games.colorphun;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
@@ -19,6 +20,7 @@ import com.google.android.gms.games.GamesStatusCodes;
 import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.android.gms.games.leaderboard.Leaderboards;
 import com.google.example.games.basegameutils.BaseGameActivity;
+import com.prakharme.prakharsriv.colorphun.R;
 
 public class GameOverActivity extends BaseGameActivity {
 

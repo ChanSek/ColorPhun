@@ -1,4 +1,4 @@
-package com.prakharme.prakharsriv.colorphun;
+package com.chanse.games.colorphun;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -14,7 +14,9 @@ import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.google.example.games.basegameutils.BaseGameActivity;
+import com.prakharme.prakharsriv.colorphun.R;
 
 public class HomeScreenActivity extends BaseGameActivity implements View.OnClickListener {
 

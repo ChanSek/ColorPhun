@@ -1,4 +1,4 @@
-package com.prakharme.prakharsriv.colorphun.util;
+package com.chanse.games.colorphun.util;
 
 import java.util.Random;
 

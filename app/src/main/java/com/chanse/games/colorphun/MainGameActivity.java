@@ -1,4 +1,4 @@
-package com.prakharme.prakharsriv.colorphun;
+package com.chanse.games.colorphun;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
@@ -46,11 +46,11 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     }
 
     protected void setupProgressView() {
-        timerProgress = (ProgressBar) findViewById(R.id.progress_bar);
-        pointsTextView = (TextView) findViewById(R.id.points_value);
-        levelTextView = (TextView) findViewById(R.id.level_value);
-        TextView pointsLabel = (TextView) findViewById(R.id.points_label);
-        TextView levelsLabel = (TextView) findViewById(R.id.level_label);
+        timerProgress = (ProgressBar) findViewById(com.prakharme.prakharsriv.colorphun.R.id.progress_bar);
+        pointsTextView = (TextView) findViewById(com.prakharme.prakharsriv.colorphun.R.id.points_value);
+        levelTextView = (TextView) findViewById(com.prakharme.prakharsriv.colorphun.R.id.level_value);
+        TextView pointsLabel = (TextView) findViewById(com.prakharme.prakharsriv.colorphun.R.id.points_label);
+        TextView levelsLabel = (TextView) findViewById(com.prakharme.prakharsriv.colorphun.R.id.level_label);
 
         // setting up fonts
         Typeface avenir_black = Typeface.createFromAsset(getAssets(), "fonts/avenir_black.ttf");
@@ -61,9 +61,9 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         levelsLabel.setTypeface(avenir_book);
 
         // setting up animations
-        pointAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.points_animations);
+        pointAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, com.prakharme.prakharsriv.colorphun.R.animator.points_animations);
         pointAnim.setTarget(pointsTextView);
-        levelAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.level_animations);
+        levelAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, com.prakharme.prakharsriv.colorphun.R.animator.level_animations);
         levelAnim.setTarget(levelTextView);
     }
 
@@ -129,7 +129,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     protected void startGame() {
         gameStart = true;
 
-        Toast.makeText(this, R.string.game_help, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, com.prakharme.prakharsriv.colorphun.R.string.game_help, Toast.LENGTH_SHORT).show();
         setColorsOnButtons();
 
         // start timer
@@ -152,7 +152,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
 
     private int saveAndGetHighScore() {
         SharedPreferences preferences = this.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                getString(com.prakharme.prakharsriv.colorphun.R.string.preference_file_key), Context.MODE_PRIVATE);
 
         int highScore = preferences.getInt("HIGHSCORE", 0);
 

@@ -1,4 +1,4 @@
-package com.prakharme.prakharsriv.colorphun.util;
+package com.chanse.games.colorphun.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -27,14 +27,14 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
 
     /**
      * Flags to test against the first parameter in
-     * {@link android.view.View.OnSystemUiVisibilityChangeListener#onSystemUiVisibilityChange(int)}
+     * {@link View.OnSystemUiVisibilityChangeListener#onSystemUiVisibilityChange(int)}
      * to determine the system UI visibility state.
      */
     private int mTestFlags;
 
     /**
      * Whether or not the system UI is currently visible. This is cached from
-     * {@link android.view.View.OnSystemUiVisibilityChangeListener}.
+     * {@link View.OnSystemUiVisibilityChangeListener}.
      */
     private boolean mVisible = true;
 
