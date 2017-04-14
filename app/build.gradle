@@ -1,40 +1,46 @@
 apply plugin: 'com.android.application'
+apply from: "../constants.gradle"
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'prakhar srivastav'
-            keyPassword 'prakhar'
-            storeFile file('/Users/asrinivasan/Documents/AndroidstudioProjects/keystore.jks')
-            storePassword 'prakhar'
-        }
-    }
-    compileSdkVersion 20
-    buildToolsVersion '20.0.0'
+    compileSdkVersion project.ext.compileSdk
+    buildToolsVersion "${project.ext.buildtools}"
+
     defaultConfig {
-        applicationId 'com.prakharme.prakharsriv.colorphun'
-        minSdkVersion 15
-        targetSdkVersion 20
-        versionCode 5
-        versionName '1.0.4'
-        signingConfig signingConfigs.config
+        applicationId "com.chanse.games.colorphun"
+        minSdkVersion project.ext.minSdk
+        targetSdkVersion project.ext.targetSdk
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        // Enable the experimental Jack build tools.
+        jackOptions {
+            enabled true
+            additionalParameters('jack.incremental': 'true')
+        }
+        versionNameSuffix ' (Beta)'
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
+//            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
-        }
-        debug {
-            signingConfig signingConfigs.config
         }
     }
-    productFlavors {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:20.0.0'
-    compile project(':BaseGameUtils')
-    compile 'com.google.android.gms:play-services:5.0.89'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:${project.ext.support_library_version}"
+    testCompile 'junit:junit:4.12'
+    // The API module for 3rd party apps
+    debugCompile 'com.github.ChanseGames:ChanseGames-Android:1.0.0:devDebug@aar'
+    releaseCompile 'com.github.ChanseGames:ChanseGames-Android:1.0.0:prodRelease@aar'
 }
