@@ -18,10 +18,8 @@ public class EasyGameActivity extends MainGameActivity {
         setContentView(R.layout.activity_easy_game);
         setupProgressView();
 
-        POINT_INCREMENT = 2;
-        TIMER_BUMP = 2;
-
         gameMode = GameMode.EASY;
+        intentAction = ACTION_EASY;
 
         topBtn = (Button) findViewById(R.id.top_button);
         bottomBtn = (Button) findViewById(R.id.bottom_button);
@@ -32,6 +30,10 @@ public class EasyGameActivity extends MainGameActivity {
         resetGame();
         setupGameLoop();
         startGame();
+
+        POINT_INCREMENT = 2;
+        SCORE_INCREMENT = LEVEL * level;
+        TIMER_BUMP = 2;
     }
 
     @Override
@@ -76,4 +78,8 @@ public class EasyGameActivity extends MainGameActivity {
         }
     }
 
+    @Override
+    protected void updateScoreIncrement() {
+        SCORE_INCREMENT = LEVEL * level;
+    }
 }

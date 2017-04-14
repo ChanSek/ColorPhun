@@ -7,12 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class GameOverActivity extends BaseGameActivity {
+public class GameOverActivity extends FragmentActivity {
 
     private int points, best, level;
     private boolean newScore;
@@ -20,9 +21,6 @@ public class GameOverActivity extends BaseGameActivity {
     private TextView gameOverText, pointsBox, highScoreText;
     private SharedPreferences sharedPreferences;
     private MainGameActivity.GameMode mode;
-
-    final int REQUEST_LEADERBOARD = 4000;
-    final int REQUEST_ACHIEVEMENTS = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

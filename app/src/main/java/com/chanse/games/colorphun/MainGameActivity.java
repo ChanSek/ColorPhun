@@ -16,21 +16,33 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chanse.games.ChanseGames;
+import com.chanse.games.common.ChanseConstants;
+import com.chanse.games.model.Game;
+
+import java.util.LinkedHashMap;
+
 public abstract class MainGameActivity extends Activity implements View.OnClickListener {
+
+    protected static final String ACTION_EASY = "com.chanse.COLORPHUN_EASY";
+    protected static final String ACTION_HARD = "com.chanse.COLORPHUN_HARD";
 
     protected TextView pointsTextView, levelTextView;
     protected ProgressBar timerProgress;
     protected AnimatorSet pointAnim, levelAnim;
 
     protected int level, points;
+    protected long score;
     protected boolean gameStart = false;
     protected Runnable runnable;
     protected int timer;
 
-    public enum GameMode { EASY, HARD }
+    enum GameMode { EASY, HARD }
     protected GameMode gameMode;
+    protected String intentAction;
 
     protected int POINT_INCREMENT;
+    protected int SCORE_INCREMENT;
     protected int TIMER_BUMP;
     protected static int TIMER_DELTA = -1;
     protected static final int START_TIMER = 200;
@@ -38,11 +50,23 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     protected static final int LEVEL = 25;
 
     protected Handler handler;
+    protected Bundle mExtra;
+    protected Game mFromGame;
+    protected long mTargetScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new Handler();
+        ChanseGames.onGameStart(this);
+        Intent intent = getIntent();
+        mExtra = intent.getBundleExtra(ChanseConstants.KEY_EXTRA);
+        if (mExtra != null) {
+            mFromGame = mExtra.getParcelable(ChanseConstants.KEY_EXTRA_GAME);
+            if (mFromGame != null) {
+                mTargetScore = mFromGame.getScore();
+            }
+        }
     }
 
     protected void setupProgressView() {
@@ -95,24 +119,13 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
                             TIMER_DELTA = -TIMER_DELTA / TIMER_BUMP;
                         }
                     }
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            timerProgress.setProgress(timer);
-                        }
-                    });
+                    handler.post(() -> timerProgress.setProgress(timer));
                 }
                 if (gameStart) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            endGame();
-                        }
-                    });
+                    handler.post(() -> endGame());
                 }
             }
         };
-
     }
 
     protected void resetGame() {
@@ -121,8 +134,8 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         points = 0;
 
         // update view
-        pointsTextView.setText(Integer.toString(points));
-        levelTextView.setText(Integer.toString(level));
+        pointsTextView.setText(String.valueOf(points));
+        levelTextView.setText(String.valueOf(level));
         timerProgress.setProgress(0);
     }
 
@@ -145,9 +158,20 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
 
     protected void endGame() {
         gameStart = false;
+        Game game = new Game();
+        game.setPackageName(getPackageName());
+        game.setScore(score);
+        LinkedHashMap<String, Object> properties = new LinkedHashMap<>();
+        properties.put(getString(R.string.points_text), points);
+        properties.put(getString(R.string.level_text), level);
+        game.setProperties(properties);
+        game.setIntentAction(intentAction);
+
+        // Determine whether it's a challenge or a normal game
+        if (mFromGame != null) ChanseGames.onChallengeOver(this, game, mExtra); // It's a challenge
+        else ChanseGames.onGameOver(this, game);                                // It's a game
         int highScore = saveAndGetHighScore();
         launchGameOver(highScore);
-        finish();
     }
 
     private int saveAndGetHighScore() {
@@ -155,7 +179,6 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         int highScore = preferences.getInt("HIGHSCORE", 0);
-
         if (points > highScore) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt("HIGHSCORE", points);
@@ -180,12 +203,12 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     public void updatePoints() {
         points = points + POINT_INCREMENT;
         TIMER_DELTA = -TIMER_BUMP * TIMER_DELTA; // give a timer bump
-        pointsTextView.setText(Integer.toString(points));
+        pointsTextView.setText(String.valueOf(points));
         pointAnim.start();
 
         if (points > level * LEVEL) {
             incrementLevel();
-            levelTextView.setText(Integer.toString(level));
+            levelTextView.setText(String.valueOf(level));
             levelAnim.start();
         }
     }
@@ -193,6 +216,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     // called when user goes to next level
     public void incrementLevel() {
         level += 1;
+        updateScoreIncrement();
         TIMER_DELTA = level;
     }
 
@@ -200,4 +224,6 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     abstract protected void setColorsOnButtons();
 
     abstract protected void calculatePoints(View view);
+
+    abstract protected void updateScoreIncrement();
 }

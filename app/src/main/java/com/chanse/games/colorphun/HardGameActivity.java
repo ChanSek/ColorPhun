@@ -11,7 +11,6 @@ import com.chanse.games.colorphun.util.BetterColor;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class HardGameActivity extends MainGameActivity {
 
     private ArrayList<Button> buttonList;
@@ -21,9 +20,6 @@ public class HardGameActivity extends MainGameActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hard_game);
         setupProgressView();
-
-        POINT_INCREMENT = 4;
-        TIMER_BUMP = 2;
 
         gameMode = GameMode.HARD;
 
@@ -38,7 +34,7 @@ public class HardGameActivity extends MainGameActivity {
         button_3.setOnClickListener(this);
         button_4.setOnClickListener(this);
 
-        buttonList = new ArrayList<Button>();
+        buttonList = new ArrayList<>();
         buttonList.add(button_1);
         buttonList.add(button_2);
         buttonList.add(button_3);
@@ -48,11 +44,15 @@ public class HardGameActivity extends MainGameActivity {
         resetGame();
         setupGameLoop();
         startGame();
+
+        POINT_INCREMENT = 4;
+        SCORE_INCREMENT = LEVEL * 2 * level;
+        TIMER_BUMP = 2;
     }
 
     @Override
     protected void setColorsOnButtons() {
-        int color  = Color.parseColor(BetterColor.getColor());
+        int color = Color.parseColor(BetterColor.getColor());
         int red = Color.red(color);
         int green = Color.green(color);
         int blue = Color.blue(color);
@@ -98,7 +98,7 @@ public class HardGameActivity extends MainGameActivity {
     // Fisher Yates shuffling algorithm
     private int[] shuffledColors() {
         Random random = new Random();
-        int[] arr = {255, 185, 155, 225 };
+        int[] arr = {255, 185, 155, 225};
         for (int i = arr.length - 1; i >= 1; i--) {
             int j = random.nextInt(i);
             // swap i and j
@@ -108,5 +108,10 @@ public class HardGameActivity extends MainGameActivity {
             arr[j] = tmp;
         }
         return arr;
+    }
+
+    @Override
+    protected void updateScoreIncrement() {
+        SCORE_INCREMENT = LEVEL * 2 * level;
     }
 }
