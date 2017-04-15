@@ -38,7 +38,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "com.android.support:appcompat-v7:${project.ext.support_library_version}"
     testCompile 'junit:junit:4.12'
     // The API module for 3rd party apps
     debugCompile('com.github.ChanseGames:ChanseGames-Android:1.0.0:devDebug@aar', {
