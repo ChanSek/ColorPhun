@@ -22,6 +22,7 @@ public class HardGameActivity extends MainGameActivity {
         setupProgressView();
 
         gameMode = GameMode.HARD;
+        intentAction = ACTION_HARD;
 
         // buttons
         Button button_1 = (Button) findViewById(R.id.button_1);
