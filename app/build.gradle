@@ -41,6 +41,10 @@ dependencies {
     compile "com.android.support:appcompat-v7:${project.ext.support_library_version}"
     testCompile 'junit:junit:4.12'
     // The API module for 3rd party apps
-    debugCompile 'com.github.ChanseGames:ChanseGames-Android:1.0.0:devDebug@aar'
-    releaseCompile 'com.github.ChanseGames:ChanseGames-Android:1.0.0:prodRelease@aar'
+    debugCompile('com.github.ChanseGames:ChanseGames-Android:1.0.0:devDebug@aar', {
+        exclude group: 'com.github.ChanseGames', module: 'app'
+    })
+    releaseCompile('com.github.ChanseGames:ChanseGames-Android:1.0.0:prodRelease@aar', {
+        exclude group: 'com.github.ChanseGames', module: 'app'
+    })
 }
