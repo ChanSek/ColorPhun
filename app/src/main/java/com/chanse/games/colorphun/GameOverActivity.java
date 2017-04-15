@@ -62,6 +62,15 @@ public class GameOverActivity extends FragmentActivity {
         level = bundle.getInt("level");
         best = bundle.getInt("best");
         newScore = bundle.getBoolean("newScore");
+        boolean isChallenge = bundle.getBoolean("isChallenge");
+        if (isChallenge) {
+            boolean isWinner = bundle.getBoolean("isWinner");
+            if (isWinner) {
+                gameOverText.setText(R.string.won_msg);
+            } else {
+                gameOverText.setText(R.string.lost_msg);
+            }
+        }
         mode =  MainGameActivity.GameMode.valueOf(bundle.getString("gameMode"));
 
         // set data

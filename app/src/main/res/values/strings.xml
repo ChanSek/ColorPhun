@@ -3,6 +3,7 @@
     <string name="app_name">ColorPhun</string>
     <string name="points_text">Points</string>
     <string name="level_text">Level</string>
+    <string name="target_text">Target</string>
     <string name="game_help">Tap the lighter color FAST!</string>
     <string name="game_over">Game Over</string>
     <string name="retry_game">Replay</string>
@@ -15,4 +16,6 @@
     <string name="best_label">Best</string>
     <string name="title_activity_easy_game">EasyGameActivity</string>
     <string name="title_activity_hard_game">HardGameActivity</string>
+    <string name="won_msg">You Won</string>
+    <string name="lost_msg">You Lost</string>
 </resources>

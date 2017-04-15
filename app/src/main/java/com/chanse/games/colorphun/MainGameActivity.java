@@ -27,12 +27,12 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     protected static final String ACTION_EASY = "com.chanse.COLORPHUN_EASY";
     protected static final String ACTION_HARD = "com.chanse.COLORPHUN_HARD";
 
-    protected TextView pointsTextView, levelTextView;
+    protected TextView pointsTextView, levelTextView, targetTextView;
     protected ProgressBar timerProgress;
-    protected AnimatorSet pointAnim, levelAnim;
+    protected AnimatorSet pointAnim, levelAnim, targetAnim;
 
     protected int level, points;
-    protected long score;
+    protected long score, mTargetScore, mRemainingTargetScore;
     protected boolean gameStart = false;
     protected Runnable runnable;
     protected int timer;
@@ -52,7 +52,6 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     protected Handler handler;
     protected Bundle mExtra;
     protected Game mFromGame;
-    protected long mTargetScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         if (mExtra != null) {
             mFromGame = mExtra.getParcelable(ChanseConstants.KEY_EXTRA_GAME);
             if (mFromGame != null) {
-                mTargetScore = mFromGame.getScore();
+                mRemainingTargetScore = mTargetScore = mFromGame.getScore();
             }
         }
     }
@@ -89,6 +88,19 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         pointAnim.setTarget(pointsTextView);
         levelAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.level_animations);
         levelAnim.setTarget(levelTextView);
+
+        // If it's a challenge, then setup the views related to show target score
+        if (mFromGame != null) {
+            targetTextView = (TextView) findViewById(R.id.target_value);
+            targetTextView.setVisibility(View.VISIBLE);
+            targetTextView.setTypeface(avenir_black);
+            targetTextView.setText(String.valueOf(mRemainingTargetScore));
+            TextView targetLabel = (TextView) findViewById(R.id.target_label);
+            targetLabel.setVisibility(View.VISIBLE);
+            targetLabel.setTypeface(avenir_book);
+            targetAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.points_animations);
+            targetAnim.setTarget(targetTextView);
+        }
     }
 
     @Override
@@ -197,6 +209,10 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         intent.putExtra("best", highScore);
         intent.putExtra("newScore", highScore == points);
         intent.putExtra("gameMode", gameMode.name());
+        if (mFromGame != null) {
+            intent.putExtra("isWinner", mRemainingTargetScore < 0);
+            intent.putExtra("isChallenge", true);
+        }
         startActivity(intent);
         finish();
     }
@@ -208,6 +224,18 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         TIMER_DELTA = -TIMER_BUMP * TIMER_DELTA; // give a timer bump
         pointsTextView.setText(String.valueOf(points));
         pointAnim.start();
+        if (mFromGame != null) {
+            // It's a challenge
+            mRemainingTargetScore = mTargetScore - score;
+            // If user has not yet achieved the target score, then update the actual target
+            // Otherwise show the target as 0 - Indicating target achieved
+            if (mRemainingTargetScore >= 0) {
+                targetTextView.setText(String.valueOf(mRemainingTargetScore));
+            } else {
+                targetTextView.setText(String.valueOf(0));
+            }
+            targetAnim.start();
+        }
 
         if (points > level * LEVEL) {
             incrementLevel();
