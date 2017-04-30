@@ -59,10 +59,10 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     // The API module for 3rd party apps
-    debugCompile('com.github.ChanseGames:ChanseGames-Android:1.0.0:devDebug@aar', {
+    debugCompile('com.github.ChanseGames:ChanseGames-Android:1.0.4:devDebug@aar', {
         exclude group: 'com.github.ChanseGames', module: 'app'
     })
-    releaseCompile('com.github.ChanseGames:ChanseGames-Android:1.0.0:prodRelease@aar', {
+    releaseCompile('com.github.ChanseGames:ChanseGames-Android:1.0.4:prodRelease@aar', {
         exclude group: 'com.github.ChanseGames', module: 'app'
     })
 }

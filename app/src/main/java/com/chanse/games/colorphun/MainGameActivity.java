@@ -16,9 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chanse.games.ChanseGames;
-import com.chanse.games.common.ChanseConstants;
-import com.chanse.games.model.Game;
+import com.chanse.games.sdk.ChanseGames;
+import com.chanse.games.sdk.common.ChanseConstants;
+import com.chanse.games.sdk.model.Game;
 
 import java.util.LinkedHashMap;
 
